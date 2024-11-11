@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/corners"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp"
+        android:drawableStart="@drawable/baseline_task_24"
+        android:id="@+id/tv_task"
+        android:paddingStart="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task"
+        android:textStyle="bold"
+        android:textSize="26dp"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="240dp"
+        android:drawableStart="@drawable/baseline_access_time_24"
+
+        android:text="21:00" />
+
+</LinearLayout>
