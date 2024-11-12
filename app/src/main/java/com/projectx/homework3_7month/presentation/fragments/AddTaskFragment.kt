@@ -1,25 +1,23 @@
 package com.projectx.homework3_7month.presentation.fragments
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.projectx.homework3_7month.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.projectx.homework3_7month.databinding.FragmentAddTaskBinding
 import com.projectx.homework3_7month.presentation.model.TaskUI
-import com.projectx.homework3_7month.presentation.viewmodel.TaskViewModel
+import com.projectx.homework3_7month.presentation.fragments.viewmodel.TaskViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 class AddTaskFragment : Fragment() {
@@ -65,10 +63,14 @@ class AddTaskFragment : Fragment() {
             val taskUI = TaskUI(0, task, date, imageString.toString())
             viewModel.insertTask(taskUI)
 
-            viewModel.insertMessage.observe(viewLifecycleOwner) { message ->
-                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_addTaskFragment_to_taskListFragment)
+            viewModel.viewModelScope.launch {
+                viewModel.insertMessageFlow.collectLatest {
+                    Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                }
             }
+            findNavController().navigate(R.id.action_addTaskFragment_to_taskListFragment)
+
+
         }
     }
 }

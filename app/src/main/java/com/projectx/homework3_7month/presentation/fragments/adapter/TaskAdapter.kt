@@ -1,4 +1,4 @@
-package com.projectx.homework3_7month.presentation.adapter
+package com.projectx.homework3_7month.presentation.fragments.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import com.projectx.homework3_7month.presentation.model.TaskUI
 
 class TaskAdapter(
     private var taskList: List<TaskUI>,
-    private val onItemClick: (TaskUI) -> Unit,
+    private val onItemClick: (id:Int) -> Unit,
     private val onTaskDeleted: (TaskUI) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
@@ -20,7 +20,7 @@ class TaskAdapter(
             binding.tvTask.text = taskUI.taskName
             binding.tvDate.text = taskUI.taskDate
             binding.root.setOnClickListener {
-                onItemClick(taskUI)
+                onItemClick(taskUI.id)
             }
         }
     }

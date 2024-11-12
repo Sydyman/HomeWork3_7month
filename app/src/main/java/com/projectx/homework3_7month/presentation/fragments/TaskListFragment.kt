@@ -1,17 +1,19 @@
 package com.projectx.homework3_7month.presentation.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.viewModelScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
 import com.projectx.homework3_7month.R
 import com.projectx.homework3_7month.databinding.FragmentTaskListBinding
-import com.projectx.homework3_7month.presentation.adapter.TaskAdapter
-import com.projectx.homework3_7month.presentation.viewmodel.TaskViewModel
+import com.projectx.homework3_7month.presentation.fragments.adapter.TaskAdapter
+import com.projectx.homework3_7month.presentation.fragments.viewmodel.TaskViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 class TaskListFragment : Fragment() {
@@ -34,6 +36,7 @@ class TaskListFragment : Fragment() {
         addTask()
         initialize()
         showTask()
+        viewModel.loadTasks()
     }
 
     private fun addTask() {
@@ -44,7 +47,10 @@ class TaskListFragment : Fragment() {
 
     private fun initialize() {
         taskAdapter = TaskAdapter(emptyList(), { task ->
-            val action = TaskListFragmentDirections.actionTaskListFragmentToDetailFragment(task.id)
+            viewModel.viewModelScope.launch {
+                viewModel.getTask(id)
+            }
+            val action = TaskListFragmentDirections.actionTaskListFragmentToDetailFragment(task)
             findNavController().navigate(action)
         }, { task ->
             viewModel.deleteTask(task)
@@ -54,11 +60,15 @@ class TaskListFragment : Fragment() {
     }
 
     private fun showTask() {
-        viewModel.tasks.observe(viewLifecycleOwner) { tasks ->
-            taskAdapter.updateTasks(tasks)
+        viewModel.viewModelScope.launch {
+            viewModel.taskFlow.collectLatest {
+             taskAdapter.updateTasks(it)
+            }
         }
-        viewModel.loadTasks()
+
+
     }
+
 }
 
 
