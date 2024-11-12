@@ -8,6 +8,7 @@ import com.projectx.homework3_7month.domain.usecase.GetTaskUseCase
 import com.projectx.homework3_7month.domain.usecase.InsertTaskUseCase
 import com.projectx.homework3_7month.domain.usecase.TaskDelete
 import com.projectx.homework3_7month.domain.usecase.UpdateTaskUseCase
+import com.projectx.homework3_7month.presentation.fragments.base.BaseViewModel
 import com.projectx.homework3_7month.presentation.model.TaskUI
 import com.projectx.homework3_7month.presentation.model.toDomain
 import com.projectx.homework3_7month.presentation.model.toUi
@@ -25,7 +26,8 @@ class TaskViewModel(
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val delete: TaskDelete,
     private val getTaskUseCase: GetTaskUseCase
-):ViewModel() {
+): BaseViewModel() {
+
     private val _tasksStateFlow = MutableStateFlow<List<TaskUI>>(emptyList())
     val taskFlow: StateFlow<List<TaskUI>> = _tasksStateFlow.asStateFlow()
 
@@ -35,6 +37,22 @@ class TaskViewModel(
     private val _updateMessageStateFlow = MutableStateFlow(String())
     val updateMessageFlow: StateFlow<String> = _updateMessageStateFlow
 
+    fun fetchTask() {
+        runLaunchIO {
+            val task = getTaskUseCase(1)
+            task?.let {
+            }
+        }
+    }
+
+    fun loadTasks() {
+        runLaunchIO {
+            getAllNotesUseCase().onEach { taskList ->
+                _tasksStateFlow.value = taskList.map { it.toUi() }
+            }.collect()
+        }
+    }
+
     fun insertTask(taskUI: TaskUI) {
         viewModelScope.launch(Dispatchers.IO) {
             val message = insertTaskUseCase.insertTask(taskUI.toDomain())
@@ -42,21 +60,14 @@ class TaskViewModel(
         }
     }
 
-    fun loadTasks() {
-        viewModelScope.launch(Dispatchers.IO) {
-            getAllNotesUseCase().onEach {
-                _tasksStateFlow.value = it.map { model -> model.toUi() }
-            }.collect()
-        }
-
-    }
-    suspend fun getTask(id:Int)= getTaskUseCase(id).toUi()
+    suspend fun getTask(id: Int) = getTaskUseCase(id)?.toUi()
 
     fun updateTask(taskUI: TaskUI) {
         viewModelScope.launch(Dispatchers.IO) {
             updateTaskUseCase.updateTask(taskUI.toDomain())
         }
     }
+
     fun deleteTask(taskUI: TaskUI) {
         viewModelScope.launch {
             try {
