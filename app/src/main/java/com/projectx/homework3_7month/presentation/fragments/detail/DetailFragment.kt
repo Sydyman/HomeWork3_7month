@@ -1,4 +1,4 @@
-package com.projectx.homework3_7month.presentation.fragments
+package com.projectx.homework3_7month.presentation.fragments.detail
 
 import android.net.Uri
 import android.os.Bundle
@@ -7,11 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.projectx.homework3_7month.databinding.FragmentDetailBinding
 import com.projectx.homework3_7month.presentation.model.TaskUI
-import com.projectx.homework3_7month.presentation.fragments.viewmodel.TaskViewModel
 import kotlinx.coroutines.launch
 
 
@@ -19,10 +18,12 @@ import kotlinx.coroutines.launch
 class DetailFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailBinding
-    private val viewModel: TaskViewModel by viewModel()
+    private val viewModel: DetailViewModel by viewModel()
+    private val navArgs by navArgs<DetailFragmentArgs>()
+    private var taskUI:TaskUI? = null
 
-    private var taskId: Int = -1
-    private var taskUI: TaskUI? = null
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,19 +31,18 @@ class DetailFragment : Fragment() {
     ): View {
         binding = FragmentDetailBinding.inflate(inflater, container, false)
         return binding.root
-        arguments?.let {
-            taskId = it.getInt("taskId")
-        }
-        viewModel.viewModelScope.launch {
-            viewModel.getTask(id)
 
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateUI()
         setUpListeners()
+
+        viewModel.viewModelScope.launch {
+            taskUI = viewModel.getTask(navArgs.taskId)
+
+        }
 
     }
 
@@ -53,8 +53,9 @@ class DetailFragment : Fragment() {
                 taskDate = binding.tvDate2.text.toString())
             updatedTask?.let {
                 viewModel.updateTask(it)
-                findNavController().navigateUp()
+
             }
+
         }
     }
 

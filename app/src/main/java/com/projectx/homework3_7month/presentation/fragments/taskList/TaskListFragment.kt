@@ -1,4 +1,4 @@
-package com.projectx.homework3_7month.presentation.fragments
+package com.projectx.homework3_7month.presentation.fragments.taskList
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.lifecycle.viewModelScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.navigation.fragment.findNavController
+import com.projectx.addtask.TaskActivity
 import com.projectx.homework3_7month.R
 import com.projectx.homework3_7month.databinding.FragmentTaskListBinding
 import com.projectx.homework3_7month.presentation.fragments.adapter.TaskAdapter
-import com.projectx.homework3_7month.presentation.fragments.viewmodel.TaskViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -30,6 +30,11 @@ class TaskListFragment : Fragment() {
     ): View {
         return binding.root
     }
+    companion object{
+        fun newInstance():TaskListFragment{
+            return TaskListFragment()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,14 +47,15 @@ class TaskListFragment : Fragment() {
 
     private fun addTask() {
         binding.btnAdd.setOnClickListener {
-            findNavController().navigate(R.id.action_taskListFragment_to_addTaskFragment)
+            val intent = TaskActivity.createIntent(requireContext())
+            startActivity(intent)
         }
     }
 
     private fun initialize() {
         taskAdapter = TaskAdapter(emptyList(), { task ->
             viewModel.viewModelScope.launch {
-                viewModel.getTask(id)
+                viewModel.fetchTask()
             }
             val action = TaskListFragmentDirections.actionTaskListFragmentToDetailFragment(task)
             findNavController().navigate(action)

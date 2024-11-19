@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#DFE6E7"
+    android:background="#5EA6B1"
     tools:context=".presentation.fragments.AddTaskFragment"
     android:orientation="vertical">
     <ImageButton
@@ -30,16 +30,18 @@
             android:hint="Task"
             android:textColorHint="#474545"
             android:backgroundTintMode="add"
-            android:backgroundTint="@color/black"/>
+            android:textColor="@color/black"
+            android:background="@drawable/circle"/>
         <EditText
             android:drawableStart="@drawable/baseline_access_time_24"
             android:layout_gravity="center"
             android:id="@+id/tv_date2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="00:00"
+            android:textColor="@color/black"
             android:textColorHint="#474545"
-            android:backgroundTint="@color/black"
+            android:background="@drawable/circle"
             android:backgroundTintMode="add"
             android:layout_marginStart="100dp"
             />
@@ -60,6 +62,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginStart="300dp"
+        android:background="#5EA6B1"
         android:src="@drawable/add_24"
         />
 

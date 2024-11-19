@@ -1,7 +1,6 @@
-package com.projectx.homework3_7month.presentation.fragments.viewmodel
+package com.projectx.homework3_7month.presentation.fragments.taskList
 
 import android.util.Log
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.projectx.homework3_7month.domain.usecase.GetAllNotesUseCase
 import com.projectx.homework3_7month.domain.usecase.GetTaskUseCase
@@ -21,7 +20,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class TaskViewModel(
-    private val insertTaskUseCase: InsertTaskUseCase,
     private val getAllNotesUseCase: GetAllNotesUseCase,
     private val updateTaskUseCase: UpdateTaskUseCase,
     private val delete: TaskDelete,
@@ -31,11 +29,6 @@ class TaskViewModel(
     private val _tasksStateFlow = MutableStateFlow<List<TaskUI>>(emptyList())
     val taskFlow: StateFlow<List<TaskUI>> = _tasksStateFlow.asStateFlow()
 
-    private val _insertMessageStateFlow = MutableStateFlow(String())
-    val insertMessageFlow: StateFlow<String> = _insertMessageStateFlow.asStateFlow()
-
-    private val _updateMessageStateFlow = MutableStateFlow(String())
-    val updateMessageFlow: StateFlow<String> = _updateMessageStateFlow
 
     fun fetchTask() {
         runLaunchIO {
@@ -53,20 +46,6 @@ class TaskViewModel(
         }
     }
 
-    fun insertTask(taskUI: TaskUI) {
-        viewModelScope.launch(Dispatchers.IO) {
-            val message = insertTaskUseCase.insertTask(taskUI.toDomain())
-            _insertMessageStateFlow.value = message
-        }
-    }
-
-    suspend fun getTask(id: Int) = getTaskUseCase(id)?.toUi()
-
-    fun updateTask(taskUI: TaskUI) {
-        viewModelScope.launch(Dispatchers.IO) {
-            updateTaskUseCase.updateTask(taskUI.toDomain())
-        }
-    }
 
     fun deleteTask(taskUI: TaskUI) {
         viewModelScope.launch {

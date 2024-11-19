@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.fragments.TaskListFragment"
-    android:background="#E7ECED"
+    tools:context=".presentation.fragments.taskList.TaskListFragment"
+    android:background="#5EA6B1"
     android:orientation="vertical">
     <TextView
         android:paddingTop="36dp"
@@ -16,6 +16,14 @@
         android:paddingStart="100dp"
         android:textSize="26dp"
         android:textStyle="bold"/>
+    <Button
+        android:id="@+id/btn_add"
+        android:background="@drawable/corners"
+        android:layout_marginStart="300dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"
+        android:textSize="26sp"/>
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
@@ -29,15 +37,7 @@
         tools:listitem="@layout/item_task"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-    <Button
-        android:id="@+id/btn_add"
-        android:background="@drawable/corners"
-        android:layout_marginTop="600dp"
-        android:layout_marginStart="300dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="+"
-        android:textSize="26sp"/>
+
 
 
 
