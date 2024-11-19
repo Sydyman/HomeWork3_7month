@@ -22,7 +22,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "HomeWork3_7month"
 include(":app")
-include(":AddTaskModule")
 include(":addtask")
 include(":app", ":addtask")
 
