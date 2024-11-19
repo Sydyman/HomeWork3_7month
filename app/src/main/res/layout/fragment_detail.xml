@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#C1D8DB"
-    tools:context=".presentation.fragments.DetailFragment">
+    android:background="#5EA6B1"
+    tools:context=".presentation.fragments.detail.DetailFragment">
     <LinearLayout
         android:layout_marginTop="80dp"
         android:layout_width="match_parent"
@@ -20,8 +20,7 @@
             android:layout_height="wrap_content"
             android:hint="Task"
             android:textColorHint="#474545"
-            android:backgroundTintMode="add"
-            android:backgroundTint="@color/black"/>
+            android:background="@drawable/circle"/>
         <EditText
             android:drawableStart="@drawable/baseline_access_time_24"
             android:layout_gravity="center"
@@ -30,8 +29,7 @@
             android:layout_height="wrap_content"
             android:hint="00:00"
             android:textColorHint="#474545"
-            android:backgroundTint="@color/black"
-            android:backgroundTintMode="add"
+            android:background="@drawable/circle"
             android:layout_marginStart="100dp"
             />
 
@@ -51,6 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginStart="300dp"
+        android:background="#5EA6B1"
         android:src="@drawable/baseline_check_24"
         />
 

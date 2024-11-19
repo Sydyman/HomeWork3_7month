@@ -5,7 +5,7 @@ import com.projectx.homework3_7month.domain.usecase.GetTaskUseCase
 import com.projectx.homework3_7month.domain.usecase.InsertTaskUseCase
 import com.projectx.homework3_7month.domain.usecase.TaskDelete
 import com.projectx.homework3_7month.domain.usecase.UpdateTaskUseCase
-import com.projectx.homework3_7month.presentation.fragments.viewmodel.TaskViewModel
+import com.projectx.homework3_7month.presentation.fragments.taskList.TaskViewModel
 import org.koin.core.module.Module
 import org.koin.dsl.module
 

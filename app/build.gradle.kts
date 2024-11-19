@@ -15,7 +15,7 @@ android {
     defaultConfig {
         applicationId = "com.projectx.homework3_7month"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -60,5 +60,6 @@ dependencies {
     implementation(libs.koin.android)
     implementation ("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation ("androidx.navigation:navigation-ui-ktx:$navVersion")
+    implementation(project(":addtask"))
 
 }

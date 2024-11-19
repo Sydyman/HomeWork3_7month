@@ -22,4 +22,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "HomeWork3_7month"
 include(":app")
- 
+include(":addtask")
+include(":app", ":addtask")
+
+
